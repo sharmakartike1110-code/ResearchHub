@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ResearchHub — Collaboration Portal</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#">
+          <span class="brand-icon">R</span>
+          <span>Research<span class="brand-light">Hub</span>
+        </span></a>
+        <div class="workspace">
+          <span class="workspace-dot"></span> STUDENT WORKSPACE
+          <span class="chevron">⌄</span>
+        </div>
+        <nav class="nav">
+          <button class="nav-link active" data-page="overview">
+            <span>▦</span> Overview
+          </button>
+          <button class="nav-link" data-page="projects">
+            <span>▤</span> Projects <b id="navProjectCount">0</b>
+          </button>
+          <button class="nav-link" data-page="tasks">
+            <span>✓</span> Task board
+          </button>
+          <button class="nav-link" data-page="milestones">
+            <span>⚑</span> Milestones
+          </button>
+          <button class="nav-link" data-page="resources">
+            <span>⌁</span> Research library
+          </button>
+          <div class="nav-caption">COLLABORATION</div>
+          <button class="nav-link" data-page="team">
+            <span>♧</span> Team members
+          </button>
+          <button class="nav-link" data-page="activity">
+            <span>◷</span> Activity history
+          </button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="profile-mini">
+            <div class="avatar" id="sideAvatar">K</div>
+            <div>
+              <strong id="sideName"> Kartike Sharma </strong>
+              <small>Workspace admin</small>
+            </div>
+            <button id="logoutBtn" title="Sign out">↪</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <button class="icon-btn mobile-menu" id="menuBtn">☰</button>
+          <div class="crumb">
+            Workspace <span>/</span> <strong id="crumbTitle">Overview</strong>
+          </div>
+          <div class="top-actions">
+            <span class="date-label" id="today"></span
+            ><button class="icon-btn" id="quickAdd" title="Create project">
+              ＋
+            </button>
+            <div class="avatar" id="topAvatar">K</div>
+          </div>
+        </header>
+        <div class="page-wrap">
+          <section class="page active" id="page-overview">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">YOUR WORKSPACE</div>
+                <h1 id="welcome">Good morning, Kartike!</h1>
+                <p class="muted">
+                  Here’s what’s happening across your research projects.
+                </p>
+              </div>
+              <button class="btn primary" data-action="new-project">
+                ＋ New project
+              </button>
+            </div>
+            <div class="stats-grid">
+              <article class="stat-card">
+                <div class="stat-label">
+                  Total projects <span class="stat-icon purple">▤</span>
+                </div>
+                <strong id="statProjects">0</strong
+                ><small>Research spaces in your workspace</small>
+              </article>
+              <article class="stat-card">
+                <div class="stat-label">
+                  Active tasks <span class="stat-icon orange">◷</span>
+                </div>
+                <strong id="statActive">0</strong
+                ><small>Tasks currently in progress</small>
+              </article>
+              <article class="stat-card">
+                <div class="stat-label">
+                  Completed tasks <span class="stat-icon green">✓</span>
+                </div>
+                <strong id="statDone">0</strong
+                ><small>Tasks marked as complete</small>
+              </article>
+              <article class="stat-card">
+                <div class="stat-label">
+                  Team members <span class="stat-icon blue">♧</span>
+                </div>
+                <strong id="statTeam">0</strong
+                ><small>People in your workspace</small>
+              </article>
+            </div>
+            <div class="dashboard-grid">
+              <section class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2>Your projects</h2>
+                    <p class="muted">Monitor progress across your research.</p>
+                  </div>
+                  <button class="link-btn" data-go="projects">
+                    View all →
+                  </button>
+                </div>
+                <div id="overviewProjects" class="project-stack"></div>
+              </section>
+              <section class="panel">
+                <div class="panel-head">
+                  <div>
+                    <h2>Recent activity</h2>
+                    <p class="muted">Latest workspace updates.</p>
+                  </div>
+                  <span class="live"><i></i> Live</span>
+                </div>
+                <div id="overviewActivity" class="activity-stack"></div>
+              </section>
+            </div>
+            <section class="panel table-panel">
+              <div class="panel-head">
+                <div>
+                  <h2>Upcoming tasks</h2>
+                  <p class="muted">
+                    A quick look at what needs your attention.
+                  </p>
+                </div>
+                <button class="link-btn" data-go="tasks">
+                  Open task board →
+                </button>
+              </div>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>TASK</th>
+                      <th>PROJECT</th>
+                      <th>ASSIGNEE</th>
+                      <th>DUE DATE</th>
+                      <th>PRIORITY</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overviewTasks"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+
+          <section class="page" id="page-projects">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">PLAN AND ORGANIZE</div>
+                <h1>Research projects</h1>
+                <p class="muted">
+                  Create shared spaces for your team's research work.
+                </p>
+              </div>
+              <button class="btn primary" data-action="new-project">
+                ＋ New project
+              </button>
+            </div>
+            <div class="toolbar">
+              <input
+                id="projectSearch"
+                class="search"
+                placeholder="⌕  Search projects..."
+              /><span class="muted" id="projectResultCount"></span>
+            </div>
+            <div class="cards-grid" id="projectsGrid"></div>
+          </section>
+
+          <section class="page" id="page-tasks">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">STAY ON TRACK</div>
+                <h1>Task board</h1>
+                <p class="muted">
+                  Manage responsibilities and keep work moving.
+                </p>
+              </div>
+              <button class="btn primary" data-action="new-task">
+                ＋ Add task
+              </button>
+            </div>
+            <div class="kanban" id="kanban"></div>
+          </section>
+
+          <section class="page" id="page-milestones">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">PROJECT TIMELINE</div>
+                <h1>Milestones</h1>
+                <p class="muted">Track important targets and deadlines.</p>
+              </div>
+              <button class="btn primary" data-action="new-milestone">
+                ＋ Add milestone
+              </button>
+            </div>
+            <section class="panel">
+              <div id="milestoneList" class="milestone-list"></div>
+            </section>
+          </section>
+
+          <section class="page" id="page-resources">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">KNOWLEDGE SHARING</div>
+                <h1>Research library</h1>
+                <p class="muted">
+                  Keep useful links and reference notes in one place.
+                </p>
+              </div>
+              <button class="btn primary" data-action="new-resource">
+                ＋ Add resource
+              </button>
+            </div>
+            <section class="panel">
+              <div class="toolbar">
+                <input
+                  id="resourceSearch"
+                  class="search"
+                  placeholder="⌕  Search resources..."
+                />
+              </div>
+              <div id="resourceList" class="resource-list"></div>
+            </section>
+          </section>
+
+          <section class="page" id="page-team">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">WORK BETTER TOGETHER</div>
+                <h1>Team members</h1>
+                <p class="muted">
+                  Manage people and responsibilities in your workspace.
+                </p>
+              </div>
+              <button class="btn primary" data-action="new-member">
+                ＋ Add member
+              </button>
+            </div>
+            <div class="cards-grid team-grid" id="teamGrid"></div>
+          </section>
+
+          <section class="page" id="page-activity">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">WORKSPACE LOG</div>
+                <h1>Activity history</h1>
+                <p class="muted">
+                  A timeline of changes made in this workspace.
+                </p>
+              </div>
+            </div>
+            <section class="panel">
+              <div id="fullActivity" class="activity-stack"></div>
+            </section>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="modalBackdrop">
+      <section
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <div class="modal-head">
+          <div>
+            <div class="eyebrow">RESEARCHHUB WORKSPACE</div>
+            <h2 id="modalTitle">Create item</h2>
+          </div>
+          <button class="icon-btn" id="closeModal">×</button>
+        </div>
+        <form id="modalForm">
+          <div id="modalFields"></div>
+          <div class="modal-actions">
+            <button type="button" class="btn ghost" id="cancelModal">
+              Cancel</button
+            ><button type="submit" class="btn primary">Save</button>
+          </div>
+        </form>
+      </section>
+    </div>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
